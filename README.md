@@ -1,2 +1,2 @@
 # QuadrionDependencies
-Dependencies for Quadrion
+Dependencies for Quadrion Engine
