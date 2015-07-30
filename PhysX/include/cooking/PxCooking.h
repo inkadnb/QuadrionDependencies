@@ -1,29 +1,12 @@
-// This code contains NVIDIA Confidential Information and is disclosed to you
-// under a form of NVIDIA software license agreement provided separately to you.
-//
-// Notice
-// NVIDIA Corporation and its licensors retain all intellectual property and
-// proprietary rights in and to this software and related documentation and
-// any modifications thereto. Any use, reproduction, disclosure, or
-// distribution of this software and related documentation without an express
-// license agreement from NVIDIA Corporation is strictly prohibited.
-//
-// ALL NVIDIA DESIGN SPECIFICATIONS, CODE ARE PROVIDED "AS IS.". NVIDIA MAKES
-// NO WARRANTIES, EXPRESSED, IMPLIED, STATUTORY, OR OTHERWISE WITH RESPECT TO
-// THE MATERIALS, AND EXPRESSLY DISCLAIMS ALL IMPLIED WARRANTIES OF NONINFRINGEMENT,
-// MERCHANTABILITY, AND FITNESS FOR A PARTICULAR PURPOSE.
-//
-// Information and code furnished is believed to be accurate and reliable.
-// However, NVIDIA Corporation assumes no responsibility for the consequences of use of such
-// information or for any infringement of patents or other rights of third parties that may
-// result from its use. No license is granted by implication or otherwise under any patent
-// or patent rights of NVIDIA Corporation. Details are subject to change without notice.
-// This code supersedes and replaces all information previously supplied.
-// NVIDIA Corporation products are not authorized for use as critical
-// components in life support devices or systems without express written approval of
-// NVIDIA Corporation.
-//
-// Copyright (c) 2008-2014 NVIDIA Corporation. All rights reserved.
+/*
+ * Copyright (c) 2008-2015, NVIDIA CORPORATION.  All rights reserved.
+ *
+ * NVIDIA CORPORATION and its licensors retain all intellectual property
+ * and proprietary rights in and to this software, related documentation
+ * and any modifications thereto.  Any use, reproduction, disclosure or
+ * distribution of this software and related documentation without an express
+ * license agreement from NVIDIA CORPORATION is strictly prohibited.
+ */
 // Copyright (c) 2004-2008 AGEIA Technologies, Inc. All rights reserved.
 // Copyright (c) 2001-2004 NovodeX AG. All rights reserved.
 
@@ -288,7 +271,7 @@ struct PxCookingParams
 		targetPlatform = PxPlatform::eXENON;
 #elif defined(PX_PS3)
 		targetPlatform = PxPlatform::ePLAYSTATION3;
-#elif defined(PX_ARM)
+#elif defined(PX_ARM) || defined(PX_A64)
 		targetPlatform = PxPlatform::eARM;
 #elif defined(PX_WIIU)
 		targetPlatform = PxPlatform::eWIIU;
@@ -396,7 +379,6 @@ public:
 
 	\include PxCookConvexMesh_Example.cpp
 
-	\note This method is not reentrant if the convex mesh descriptor has the flag #PxConvexFlag::eCOMPUTE_CONVEX set.
 	\note The number of vertices and the number of convex polygons in a cooked convex mesh is limited to 256.
 	\note If those limits are exceeded in either the user-provided data or the final cooked mesh, an error is reported.
 	\note If the number of polygons exceed, using the #PxConvexFlag::eINFLATE_CONVEX can help you to obtain a valid convex.

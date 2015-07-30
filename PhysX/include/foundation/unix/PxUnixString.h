@@ -11,8 +11,8 @@
 // Copyright (c) 2001-2004 NovodeX AG. All rights reserved.
 
 
-#ifndef PX_FOUNDATION_PX_WINDOWS_STRING_H
-#define PX_FOUNDATION_PX_WINDOWS_STRING_H
+#ifndef PX_FOUNDATION_PX_UNIX_STRING_H
+#define PX_FOUNDATION_PX_UNIX_STRING_H
 
 #include "foundation/Px.h"
 
@@ -20,28 +20,32 @@
 #include <string.h>
 #include <stdarg.h>
 
-#pragma warning(push)
-#pragma warning(disable: 4996)
-
 #ifndef PX_DOXYGEN
 namespace physx
 {
 #endif
 
-	PX_INLINE void PxStrcpy(char* dest, size_t size, const char* src) {::strcpy_s(dest, size, src);}
-	PX_INLINE void PxStrcat(char* dest, size_t size, const char* src) {::strcat_s(dest, size, src);}
-	PX_INLINE PxI32 PxVsprintf(char* dest, size_t size, const char* src, va_list arg)
+	PX_INLINE void PxStrcpy(char* dest, size_t size, const char* src)
 	{
-		PxI32 r = ::vsprintf_s(dest, size, src, arg);
+		::strncpy(dest, src, size);
+	}
 
+	PX_INLINE int PxStrcat(char* dest, size_t size, const char* src)
+	{
+		PX_UNUSED(size);
+		::strcat(dest, src);
+		return 0;
+	}
+	PX_INLINE int PxVsprintf(char* dest, size_t size, const char* src, va_list arg)
+	{
+		PX_UNUSED(size);
+		int r = ::vsprintf( dest, src, arg );
 		return r;
 	}
-	PX_INLINE PxI32 PxStricmp(const char *str, const char *str1) {return(::_stricmp(str, str1));}
+	PX_INLINE int PxStricmp(const char *str, const char *str1) {return(::strcasecmp(str, str1));}
 
 #ifndef PX_DOXYGEN
 } // namespace physx
 #endif
-
-#pragma warning(pop)
 
 #endif

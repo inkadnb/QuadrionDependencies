@@ -11,26 +11,23 @@
 // Copyright (c) 2001-2004 NovodeX AG. All rights reserved.  
 
 
-#ifndef PX_FOUNDATION_PX_WINDOWS_INTRINSICS_H
-#define PX_FOUNDATION_PX_WINDOWS_INTRINSICS_H
+#ifndef PX_FOUNDATION_PX_UNIX_INTRINSICS_H
+#define PX_FOUNDATION_PX_UNIX_INTRINSICS_H
 
 #include "foundation/Px.h"
 #include "foundation/PxAssert.h"
 
-#if !(defined PX_WINDOWS || defined PX_WINMODERN)
-	#error "This file should only be included by Windows or WIN8ARM builds!!"
+#if !(defined PX_LINUX || defined PX_ANDROID || defined PX_PS4 || defined PX_APPLE)
+	#error "This file should only be included by Unix builds!!"
 #endif
 
 #include <math.h>
 #include <float.h>
 
-#ifndef PX_DOXYGEN
 namespace physx
 {
-namespace intrinsics
+	namespace intrinsics
 {
-#endif
-
 	//! \brief platform-specific absolute value
 	PX_CUDA_CALLABLE PX_FORCE_INLINE float abs(float a)						{	return ::fabs(a);	}
 
@@ -38,22 +35,21 @@ namespace intrinsics
 	PX_CUDA_CALLABLE PX_FORCE_INLINE float fsel(float a, float b, float c)	{	return (a >= 0.0f) ? b : c;	}
 
 	//! \brief platform-specific sign
-	PX_CUDA_CALLABLE PX_FORCE_INLINE float sign(float a)					{	return (a >= 0.0f) ? 1.0f : -1.0f; }
+	PX_CUDA_CALLABLE PX_FORCE_INLINE float sign(float a)						{	return (a >= 0.0f) ? 1.0f : -1.0f; }
 
 	//! \brief platform-specific reciprocal
 	PX_CUDA_CALLABLE PX_FORCE_INLINE float recip(float a)					{	return 1.0f/a;			}
 
 	//! \brief platform-specific reciprocal estimate
-	PX_CUDA_CALLABLE PX_FORCE_INLINE float recipFast(float a)				{	return 1.0f/a;			}
+	PX_CUDA_CALLABLE PX_FORCE_INLINE float recipFast(float a)	{	return 1.0f/a;			}
 
 	//! \brief platform-specific square root
-	PX_CUDA_CALLABLE PX_FORCE_INLINE float sqrt(float a)					{	return ::sqrtf(a);	}
+	PX_CUDA_CALLABLE PX_FORCE_INLINE float sqrt(float a)						{	return ::sqrtf(a);	}
 
 	//! \brief platform-specific reciprocal square root
 	PX_CUDA_CALLABLE PX_FORCE_INLINE float recipSqrt(float a)				{   return 1.0f/::sqrtf(a); }
 
-	//! \brief platform-specific reciprocal square root estimate
-	PX_CUDA_CALLABLE PX_FORCE_INLINE float recipSqrtFast(float a)			{	return 1.0f/::sqrtf(a); }
+	PX_CUDA_CALLABLE PX_FORCE_INLINE float recipSqrtFast(float a)	{	return 1.0f/::sqrtf(a); }
 
 	//! \brief platform-specific sine
 	PX_CUDA_CALLABLE PX_FORCE_INLINE float sin(float a)						{   return ::sinf(a); }
@@ -67,24 +63,22 @@ namespace intrinsics
 	//! \brief platform-specific maximum
 	PX_CUDA_CALLABLE PX_FORCE_INLINE float selectMax(float a, float b)		{	return a>b ? a : b; }
 
-	//! \brief platform-specific finiteness check (not INF or NAN)
-	PX_CUDA_CALLABLE PX_FORCE_INLINE bool isFinite(float a)
+	//! \brief platform-specific float floor
+	PX_FORCE_INLINE float floor(float a)
 	{
-#ifdef __CUDACC__
-		return isfinite(a) ? true : false;
-#else
-		return (0 == ((_FPCLASS_SNAN | _FPCLASS_QNAN | _FPCLASS_NINF | _FPCLASS_PINF) & _fpclass(a) ));
-#endif
+		return ::floorf(a);
 	}
 
 	//! \brief platform-specific finiteness check (not INF or NAN)
-	PX_CUDA_CALLABLE PX_FORCE_INLINE bool isFinite(double a)
+	PX_FORCE_INLINE bool isFinite(float a)
 	{
-#ifdef __CUDACC__
-		return isfinite(a) ? true : false;
-#else
-		return (0 == ((_FPCLASS_SNAN | _FPCLASS_QNAN | _FPCLASS_NINF | _FPCLASS_PINF) & _fpclass(a) ));
-#endif
+		return isfinite(a);
+	}
+
+	//! \brief platform-specific finiteness check (not INF or NAN)
+	PX_FORCE_INLINE bool isFinite(double a)
+	{
+		return isfinite(a);
 	}
 
 	/*!
@@ -128,9 +122,8 @@ namespace intrinsics
 		memSet((char* PX_RESTRICT)dest+offset, 0, 128);
 	}
 
-#ifndef PX_DOXYGEN
 } // namespace intrinsics
 } // namespace physx
-#endif
 
 #endif
+
