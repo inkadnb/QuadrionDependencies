@@ -1,0 +1,16 @@
+Download the latest version of the 32-bit Windows Standard Distribution from the 
+following URL and extract it into this folder:
+http://opensource.spotify.com/cefbuilds/index.html
+
+Note: There is likely a folder within the downloaded archive named after the build number,
+you should extract the *contents* of this folder. 
+
+You should be left with a similar folder structure to this:
+	/ext/CEF
+		/cmake
+		/Debug
+		/include
+		/libcef_dll
+		/Release
+		/Resources
+		/tests
